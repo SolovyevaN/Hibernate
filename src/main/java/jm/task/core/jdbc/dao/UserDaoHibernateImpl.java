@@ -17,7 +17,6 @@ import static jm.task.core.jdbc.util.HibernateUtil.getSessionFactory;
 public class UserDaoHibernateImpl implements UserDao  {
 
     public UserDaoHibernateImpl() {
-
     }
 
     @Override

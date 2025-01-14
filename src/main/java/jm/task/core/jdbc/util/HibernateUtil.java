@@ -2,10 +2,12 @@ package jm.task.core.jdbc.util;
 
 import jm.task.core.jdbc.model.User;
 import org.hibernate.HibernateException;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.cfg.Environment;
+import org.hibernate.exception.JDBCConnectionException;
 import org.hibernate.mapping.Property;
 import org.hibernate.service.ServiceRegistry;
 
@@ -48,9 +50,13 @@ public class HibernateUtil {
         return factory;
     }
 
-    public static void SessionFactoryClose() {
-        if (factory != null && !factory.isClosed()) {
-            factory.close();
+    public static void CloseSession(Session session) {
+        if (session != null ) {
+            try {
+                session.close();
+            } catch (HibernateException e) {
+                e.printStackTrace();
+            }
         }
     }
 }

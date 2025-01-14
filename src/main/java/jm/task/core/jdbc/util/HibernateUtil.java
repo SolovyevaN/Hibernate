@@ -13,38 +13,45 @@ import java.sql.SQLException;
 import java.util.Properties;
 
 public class HibernateUtil {
-    private static SessionFactory factory ;
+    private static SessionFactory factory;
+
+    private HibernateUtil() {
+    }
 
     public static SessionFactory getSessionFactory() {
         if (factory == null) {
-            try {
-                Configuration configuration = new Configuration();
-                Properties setting = new Properties();
-                setting.put(Environment.DRIVER, "com.mysql.cj.jdbc.Driver");
-                setting.put(Environment.URL, "jdbc:mysql://localhost:3306/sys?useSSL=false");
-                setting.put(Environment.USER, "root");
-                setting.put(Environment.PASS, "24081999Nastya");
-                setting.put(Environment.DIALECT, "org.hibernate.dialect.MySQL5Dialect");
-                setting.put(Environment.SHOW_SQL, "true");
-                setting.put(Environment.CURRENT_SESSION_CONTEXT_CLASS, "thread");
-                setting.put(Environment.HBM2DDL_AUTO, "");
-                configuration.setProperties(setting);
-                configuration.addAnnotatedClass(User.class);
-                ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
-                        .applySettings(configuration.getProperties()).build();
+            synchronized (HibernateUtil.class) {
+                if (factory == null) {
+                    try {
+                        Configuration configuration = new Configuration();
+                        Properties setting = new Properties();
+                        setting.put(Environment.DRIVER, "com.mysql.cj.jdbc.Driver");
+                        setting.put(Environment.URL, "jdbc:mysql://localhost:3306/sys?useSSL=false");
+                        setting.put(Environment.USER, "root");
+                        setting.put(Environment.PASS, "24081999Nastya");
+                        setting.put(Environment.DIALECT, "org.hibernate.dialect.MySQL5Dialect");
+                        setting.put(Environment.SHOW_SQL, "true");
+                        setting.put(Environment.CURRENT_SESSION_CONTEXT_CLASS, "thread");
+                        setting.put(Environment.HBM2DDL_AUTO, "");
+                        configuration.setProperties(setting);
+                        configuration.addAnnotatedClass(User.class);
+                        ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
+                                .applySettings(configuration.getProperties()).build();
 
-                factory = configuration.buildSessionFactory(serviceRegistry);
-            } catch (Exception e) {
-                System.out.println("Не удалось создать SessionFactory");
-                e.printStackTrace();
+                        factory = configuration.buildSessionFactory(serviceRegistry);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
             }
         }
         return factory;
     }
 
     public static void SessionFactoryClose() {
-        if (factory != null && !factory.isClosed()){
+        if (factory != null && !factory.isClosed()) {
             factory.close();
         }
     }
 }
+

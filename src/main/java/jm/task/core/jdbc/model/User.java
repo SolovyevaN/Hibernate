@@ -25,7 +25,7 @@ public class User {
         this.age = age;
     }
 
-    public User(){
+    public User() {
 
     }
 

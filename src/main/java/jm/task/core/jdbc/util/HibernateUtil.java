@@ -50,7 +50,7 @@ public class HibernateUtil {
         return factory;
     }
 
-    public static void CloseSession(Session session) {
+    public static void closeSession(Session session) {
         if (session != null ) {
             try {
                 session.close();

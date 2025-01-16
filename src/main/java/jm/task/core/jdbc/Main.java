@@ -3,11 +3,12 @@ package jm.task.core.jdbc;
 import jm.task.core.jdbc.dao.UserDaoHibernateImpl;
 import jm.task.core.jdbc.model.User;
 import jm.task.core.jdbc.util.HibernateUtil;
+import org.hibernate.SessionFactory;
 
 public class Main {
     public static void main(String[] args) {
-
-        UserDaoHibernateImpl userDao = new UserDaoHibernateImpl();
+        SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+        UserDaoHibernateImpl userDao = new UserDaoHibernateImpl(sessionFactory);
 
         userDao.saveUser ("Petya", "Ivanov", (byte) 20);
         System.out.println("User с именем Petya добавлен в базу.");

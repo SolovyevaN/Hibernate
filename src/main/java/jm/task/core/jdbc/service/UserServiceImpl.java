@@ -6,12 +6,14 @@ import jm.task.core.jdbc.dao.UserDaoJDBCImpl;
 import jm.task.core.jdbc.model.User;
 import jm.task.core.jdbc.util.HibernateUtil;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 
 import java.util.List;
 
 public class UserServiceImpl implements UserService {
-    private final UserDao userDao = new UserDaoHibernateImpl();
+     SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+    private final UserDao userDao = new UserDaoHibernateImpl(sessionFactory);
     public void createUsersTable() {
         userDao.createUsersTable();
     }

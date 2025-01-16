@@ -8,7 +8,7 @@ import org.hibernate.SessionFactory;
 public class Main {
     public static void main(String[] args) {
         SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
-        UserDaoHibernateImpl userDao = new UserDaoHibernateImpl(sessionFactory);
+        UserDaoHibernateImpl userDao = new UserDaoHibernateImpl();
 
         userDao.saveUser ("Petya", "Ivanov", (byte) 20);
         System.out.println("User с именем Petya добавлен в базу.");

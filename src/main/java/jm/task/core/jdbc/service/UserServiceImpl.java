@@ -12,11 +12,12 @@ import org.hibernate.Transaction;
 import java.util.List;
 
 public class UserServiceImpl implements UserService {
-     SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
-    private final UserDao userDao = new UserDaoHibernateImpl(sessionFactory);
-    public void createUsersTable() {
-        userDao.createUsersTable();
+
+    private final UserDao userDao;
+    public UserServiceImpl() {
+        this.userDao = new UserDaoHibernateImpl(HibernateUtil.getSessionFactory());
     }
+    public void createUsersTable() {userDao.createUsersTable();}
 
     public void dropUsersTable() {
         userDao.dropUsersTable();
